@@ -1,0 +1,62 @@
+<div class="theme-settings modal">
+    <div class="modal-header">
+        <h1 class="dialog-title">Cursor Settings</h1>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label">Style:</label>
+                <div class="controls">
+                    <select id="cursorStyle" name="cursorStyle">
+                        <option style="text-align:left;" value="vertical">vertical</option>
+                        <option style="text-align:left;" value="horizontal">horizontal</option>
+                        <option style="text-align:left;" value="block">block</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label">Color:</label>
+                <div class="controls">
+                    <input type="text" id="cursorColor" name="cursorColor" value="">
+                </div>
+                <div class="controls">
+                    <p>
+                        ex. blue, #0000ff, rgba(0, 0, 255, 1), etc.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="control-group" id="textColorGroup">
+                <label class="control-label">Text Color:</label>
+                <div class="controls">
+                    <input type="text" id="textColor" name="textColor" value="">
+                </div>
+                <div class="controls">
+                    <p>
+                        The color of the character in the block style cursor.
+                        <br>
+                        ex. blue, #0000ff, rgba(0, 0, 255, 1), etc.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label">Blink Rate:</label>
+                <div class="controls">
+                    <input type="text" id="blinkRate" name="blinkRate" value="">
+                </div>
+                <div class="controls">
+                    <p>
+                        In milliseconds.  Enter 0 for a non-blinking cursor.
+                    </p>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="dialog-button btn" data-button-id="cancel">{{Strings.CANCEL}}</button>
+        <button class="dialog-button btn primary" data-button-id="done">{{Strings.DONE}}</button>
+    </div>
+</div>
