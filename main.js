@@ -79,7 +79,7 @@ define(function (require, exports, module) {
         dialog.find('#cursorStyle').val(prefs.get("cursorStyle") || 'vertical');
         dialog.find('#cursorColor').val(prefs.get("cursorColor") || currentColor);
         dialog.find('#textColor').val(prefs.get("textColor") || 'transparent');
-        dialog.find('#blinkRate').val(prefs.get("blinkRate") || currentEditor._codeMirror.getOption('cursorBlinkRate'));
+        dialog.find('#blinkRate').val(prefs.get("blinkRate") || editors[0]._codeMirror.getOption('cursorBlinkRate'));
         dialog.find('#cursorStyle').change(ghostTextColorGroup);
         
         ghostTextColorGroup();
