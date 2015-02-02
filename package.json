@@ -9,5 +9,5 @@
     "engines": {
         "brackets": ">=1.1"
     },
-    "i18n": [ "en"]
+    "keywords": ["cursor", "block", "display", "blink"]
 }
