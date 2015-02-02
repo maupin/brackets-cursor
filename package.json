@@ -3,7 +3,7 @@
     "title": "Cursor Options",
     "description": "Change cursor display style (block, vertical, horizontal), color, and blink rate",
     "homepage": "https://github.com/maupin/brackets-cursor",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "author": "Aaron Maupin <maupin@pastrytech.com> (http://aaronmaupin.com)",
     "license": "MIT",
     "engines": {
