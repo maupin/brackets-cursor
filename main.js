@@ -23,7 +23,7 @@ define(function (require, exports, module) {
     var cssNode = null;
     var viewMenu;
     var viewMenuCommands;
-    var currentEditor;
+    var currentEditor = EditorManager.getFocusedEditor();
     var addChar = false;
     
     // NOTE: access to ._codeMirror may disappear in future releases of Brackets
@@ -79,7 +79,7 @@ define(function (require, exports, module) {
         dialog.find('#cursorStyle').val(prefs.get("cursorStyle") || 'vertical');
         dialog.find('#cursorColor').val(prefs.get("cursorColor") || currentColor);
         dialog.find('#textColor').val(prefs.get("textColor") || 'transparent');
-        dialog.find('#blinkRate').val(prefs.get("blinkRate") || editors[0]._codeMirror.getOption('cursorBlinkRate'));
+        dialog.find('#blinkRate').val(prefs.get("blinkRate") || currentEditor._codeMirror.getOption('cursorBlinkRate'));
         dialog.find('#cursorStyle').change(ghostTextColorGroup);
         
         ghostTextColorGroup();
@@ -192,6 +192,10 @@ define(function (require, exports, module) {
             refreshCursorOptions(focusedEditor);
             updateCursor(focusedEditor);
         }
+    }
+    
+    if (currentEditor) {
+        editors.push(currentEditor);
     }
     
     CommandManager.register("Cursor...", commandId, showDialog);
