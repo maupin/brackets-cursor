@@ -1,5 +1,5 @@
 # brackets-cursor
-An Adobe Brackets extension that adds a cursor display options dialog to the View menu.  For example, you can finally have a block cursor in Brackets.
+An [Adobe Brackets](http://brackets.io/) extension that adds a cursor display options dialog to the View menu.  For example, you can finally have a block cursor in Brackets.
 ## Installation
 Install the extension using Brackets' Extension Manager.  Alternatively, choose Download Zip from GitHub and unzip the directory into your extensions/user folder, then restart Brackets.
 ## How to Use
