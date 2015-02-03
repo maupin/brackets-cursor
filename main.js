@@ -23,7 +23,7 @@ define(function (require, exports, module) {
     var cssNode = null;
     var viewMenu;
     var viewMenuCommands;
-    var currentEditor = EditorManager.getFocusedEditor();
+    var currentEditor = EditorManager.getCurrentFullEditor();
     var addChar = false;
     
     // NOTE: access to ._codeMirror may disappear in future releases of Brackets
