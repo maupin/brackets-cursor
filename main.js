@@ -195,7 +195,7 @@ define(function (require, exports, module) {
     }
     
     if (currentEditor) {
-        editors.push(currentEditor);
+        registerEditor(currentEditor);
     }
     
     CommandManager.register("Cursor...", commandId, showDialog);
