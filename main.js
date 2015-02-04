@@ -98,7 +98,7 @@ define(function (require, exports, module) {
                 prefs.save();
                 refreshCursorOptions(currentEditor);
             }
-            currentEditor._codeMirror.refresh();
+            EditorManager.getCurrentFullEditor()._codeMirror.refresh();
         });
     }
 
