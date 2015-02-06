@@ -67,6 +67,7 @@ define(function (require, exports, module) {
         var dialog = d.getElement();
         var cursor = $('.CodeMirror-cursor');
         var currentColor = cursor.css('border-left-color');
+        var currentBlinkRate;
         
         function ghostTextColorGroup() {
             if (dialog.find('#cursorStyle').val() === 'block') {
@@ -76,10 +77,16 @@ define(function (require, exports, module) {
             }
         }
         
+        if (currentEditor) {
+            currentBlinkRate = currentEditor._codeMirror.getOption('cursorBlinkRate');
+        } else {
+            currentBlinkRate = 530;
+        }
+        
         dialog.find('#cursorStyle').val(prefs.get("cursorStyle") || 'vertical');
         dialog.find('#cursorColor').val(prefs.get("cursorColor") || currentColor);
         dialog.find('#textColor').val(prefs.get("textColor") || 'transparent');
-        dialog.find('#blinkRate').val(prefs.get("blinkRate") || currentEditor._codeMirror.getOption('cursorBlinkRate'));
+        dialog.find('#blinkRate').val(prefs.get("blinkRate") || currentBlinkRate);
         dialog.find('#cursorStyle').change(ghostTextColorGroup);
         
         ghostTextColorGroup();
@@ -98,7 +105,10 @@ define(function (require, exports, module) {
                 prefs.save();
                 refreshCursorOptions(currentEditor);
             }
-            EditorManager.getCurrentFullEditor()._codeMirror.refresh();
+            currentEditor = EditorManager.getCurrentFullEditor();
+            if (currentEditor) {
+                currentEditor._codeMirror.refresh();
+            }
         });
     }
 
