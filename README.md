@@ -1,8 +1,8 @@
 # brackets-cursor
 
-An [Adobe Brackets](http://brackets.io/) extension that adds a cursor display options dialog to the View menu.
+An extension that adds cursor display settings to [Adobe Brackets](http://brackets.io/).
 
-Now you can finally have a block cursor in Brackets, like nature intended.
+Now when coding with Brackets you can have a block cursor, as nature intended.
 
 ## Installation
 
@@ -10,7 +10,9 @@ Install the extension using Brackets' Extension Manager.  Alternatively, choose 
 
 ## How to Use
 
-Change cursor settings by opening the new View > Cursor... menu option.  The cursor and text color inputs accept any valid CSS color string.  For example, 'blue' or 'rgba(0, 0, 0, .5)'.
+brackets-cursor adds a new menu option, 'Cursor...', to the View menu.  Use this menu option to open up a dialog with various cursor settings.
+
+Color inputs should be CSS color strings.  For example, 'blue', '#0000ff', 'rgb(0, 0, 255)', or 'rgba(0, 0, 255, .5)'.  Cursor blink rate is in milliseconds.  Use 0 for a non-blinking cursor. 
 
 ## License
 
