@@ -4,6 +4,8 @@ An extension that adds cursor display settings to [Adobe Brackets](http://bracke
 
 Now when coding with Brackets you can have a block cursor, as nature intended.
 
+![Block Cursor](https://raw.github.com/maupin/brackets-cursor/master/screenshot.png)
+
 ## Installation
 
 Install the extension using Brackets' Extension Manager.  Alternatively, choose Download Zip from GitHub and unzip the directory into your extensions/user folder, then restart Brackets.
