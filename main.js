@@ -25,6 +25,7 @@ define(function (require, exports, module) {
     var viewMenuCommands;
     var currentEditor = EditorManager.getCurrentFullEditor();
     var addChar = false;
+    var updateCursorsTimer = null;
     
     // NOTE: access to ._codeMirror may disappear in future releases of Brackets
     // discussion here:
@@ -113,41 +114,51 @@ define(function (require, exports, module) {
     }
 
     function updateCursor(editor) {
-        setTimeout(function () {
-            // CodeMirror continually empties the cursor div on any activity
-            // so we update on the next tick.
-            var document = editor.document;
-            var selections = editor.getSelections();
-            var cursorElements = window.document.getElementsByClassName("CodeMirror-cursor");
-            var chars = [];
-            var cursors = [];
-            var i;
-            selections.forEach(function (selection) {
-                var startPos = selection.start;
-                var endPos = {line: startPos.line, ch: startPos.ch + 1};
-                chars.push(document.getRange(startPos, endPos));
-            });
-            for (i = cursorElements.length - 1; i >= 0; i--) {
-                cursors.push(cursorElements[i]);
+        // CodeMirror continually empties the cursor div on any activity
+        
+        if (!addChar) {
+            return;
+        }
+        
+        var document = editor.document;
+        var selections = editor.getSelections();
+        var cursorElements = window.document.getElementsByClassName("CodeMirror-cursor");
+        var chars = [];
+        var cursors = [];
+        var repeat = true;
+        var i;
+        selections.forEach(function (selection) {
+            var startPos = selection.start;
+            var endPos = {line: startPos.line, ch: startPos.ch + 1};
+            chars.push(document.getRange(startPos, endPos));
+        });
+        for (i = cursorElements.length - 1; i >= 0; i--) {
+            cursors.push(cursorElements[i]);
+        }
+        cursors.sort(function (c1, c2) {
+            // ensure that the right chars go into the right cursors
+            var $c1 = $(c1);
+            var $c2 = $(c2);
+            if ($c1.offset().top < $c2.offset().top && $c1.offset().left < $c2.offset().left) {
+                return -1;
+            } else {
+                return 1;
             }
-            cursors.sort(function (c1, c2) {
-                // ensure that the right chars go into the right cursors
-                var $c1 = $(c1);
-                var $c2 = $(c2);
-                if ($c1.offset().top < $c2.offset().top && $c1.offset().left < $c2.offset().left) {
-                    return -1;
-                } else {
-                    return 1;
-                }
-            });
-            if (addChar) {
-                cursors.forEach(function (cursor, i) {
-                    if (chars[i]) {
-                        cursor.innerHTML = chars[i];
-                    }
-                });
+        });
+
+        cursors.forEach(function (cursor, i) {
+            if (chars[i]) {
+                cursor.innerHTML = chars[i];
             }
-        }, 1);
+        });
+
+    }
+    
+    function updateAllCursors() {
+        var i;
+        for (i = 0; i < editors.length; i++) {
+            updateCursor(editors[i]);
+        }
     }
     
     function cursorActivityHandler(event) {
@@ -156,15 +167,14 @@ define(function (require, exports, module) {
     }
     
     function registerEditor(editor) {
-        var $editor = $(editor);
         // CodeMirror will refill it.  We need to
         // empty it so ...
         $('.CodeMirror-cursors').empty();
         
         if (editors.indexOf(editor) === -1) {
             editors.push(editor);
-            $editor.on("cursorActivity", cursorActivityHandler);
-            $editor.on("scroll", cursorActivityHandler);
+            editor.on("cursorActivity", cursorActivityHandler);
+            editor.on("scroll", cursorActivityHandler);
             // without a refresh, cursor will be hidden when switching
             // back to a previously active editor
             editor._codeMirror.refresh();
@@ -224,6 +234,10 @@ define(function (require, exports, module) {
         $(WorkspaceManager).on('workspaceUpdateLayout', viewUpdateHandler);
         $(MainViewManager).on('activePaneChange', viewUpdateHandler);
         $(EditorManager).on('activeEditorChange', activeEditorChangedHandler);
+        // this is pretty kludgy and resource intensive, but it works.
+        // wasn't necessary before, but it looks like CodeMirror now empties
+        // cursor div multiple times instead of just once...
+        updateCursorsTimer = setInterval(updateAllCursors, 30);
     });
 
 });
